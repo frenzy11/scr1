@@ -39,7 +39,7 @@ parameter int unsigned          SCR1_CSR_MTVEC_BASE_VAL_BITS    = `SCR1_XLEN-SCR
   `define SCR1_IFU_QUEUE_BYPASS
   `undef  SCR1_EXU_STAGE_BYPASS
   `undef  SCR1_CLKCTRL_EN
-  `undef  SCR1_VECT_IRQ_EN
+  `undef  SCR1_VECT_IRQ_ENSCR1_TRACE_LOG_FULL
   `undef  SCR1_CSR_MCOUNTEN_EN
   `define SCR1_CFG_EXCL_UNCORE
   parameter int unsigned SCR1_CSR_MTVEC_BASE_RW_BITS = 0;
@@ -170,6 +170,6 @@ parameter int unsigned  SCR1_CSR_MTVEC_BASE_RO_BITS = (`SCR1_XLEN-(SCR1_CSR_MTVE
 //-------------------------------------------------------------------------------
 //`define SCR1_SIM_ENV                    // enable simulation code (SVA, trace log)
 `define SCR1_TRACE_LOG_EN               // enable trace log
-`define SCR1_TRACE_LOG_FULL             // full trace log
+//`define SCR1_TRACE_LOG_FULL             // full trace log
 
 `endif // SCR1_ARCH_DESCRIPTION_SVH
