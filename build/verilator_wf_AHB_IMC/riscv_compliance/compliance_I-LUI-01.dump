@@ -1,0 +1,524 @@
+
+/home/oleg/scr1/build/verilator_wf_AHB_IMC/compliance_I-LUI-01.elf:     формат файла elf32-littleriscv
+/home/oleg/scr1/build/verilator_wf_AHB_IMC/compliance_I-LUI-01.elf
+архитектура: riscv:rv32, флаги 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+начальный адрес 0x00000200
+
+Заголовок программы:
+    LOAD off    0x00001000 vaddr 0x00000000 paddr 0x00000000 align 2**12
+         filesz 0x000007c8 memsz 0x000007e0 flags rwx
+    LOAD off    0x00001c00 vaddr 0x0000fc00 paddr 0x0000fc00 align 2**12
+         filesz 0x00000000 memsz 0x00000400 flags rw-
+
+Разделы:
+Idx Name          Size      VMA       LMA       File off  Algn  Флаги
+  0 .text.init    00000284  00000000  00000000  00001000  2**6  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .text         00000360  000002a0  000002a0  000012a0  2**5  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         00000180  00000600  00000600  00001600  2**4  CONTENTS, ALLOC, LOAD, DATA
+  3 .tohost       00000048  00000780  00000780  00001780  2**6  CONTENTS, ALLOC, LOAD, DATA
+  4 .sdata        00000018  000007c8  000007c8  000017c8  2**0  ALLOC
+  5 .tdata        00000000  000007e0  000007e0  000017c8  2**0  CONTENTS, ALLOC, LOAD, DATA, THREAD_LOCAL
+  6 .tbss         00000000  000007e0  000007e0  00000000  2**0  ALLOC, THREAD_LOCAL
+  7 .bss          00000000  000007e0  000007e0  000017c8  2**0  ALLOC
+  8 .stack        00000400  0000fc00  0000fc00  00001c00  2**0  ALLOC
+SYMBOL TABLE:
+00000000 l    d  .text.init	00000000 .text.init
+000002a0 l    d  .text	00000000 .text
+00000600 l    d  .data	00000000 .data
+00000780 l    d  .tohost	00000000 .tohost
+000007c8 l    d  .sdata	00000000 .sdata
+000007e0 l    d  .tdata	00000000 .tdata
+000007e0 l    d  .tbss	00000000 .tbss
+000007e0 l    d  .bss	00000000 .bss
+0000fc00 l    d  .stack	00000000 .stack
+00000000 l    df *ABS*	00000000 /home/oleg/scr1/build/verilator_wf_AHB_IMC/riscv_compliance/riscv_compliance_objs/I-LUI-01.o
+000005c0 l       .text	00000000 sc_exit
+000001c0 l       .text.init	00000000 trap_vector
+000001fc l       .text.init	00000000 _report
+000001f8 l       .text.init	00000000 handle_exception
+000001f8 l       .text.init	00000000 other_exception
+000002a0 l       .text	00000000 _run_test
+00000630 l       .data	00000000 test_A_res
+00000600 l       .data	00000000 test_B_data
+00000644 l       .data	00000000 test_B_res
+00000658 l       .data	00000000 test_C_res
+000005ac l       .text	00000000 ecall
+00000400 g       *ABS*	00000000 STACK_SIZE
+00000fc8 g       .sdata	00000000 __global_pointer$
+00000670 g       .data	00000000 end_signature
+00000610 g       .data	00000000 begin_regstate
+00000630 g       .data	00000000 begin_signature
+00000200 g       .text.init	00000000 _start
+00000020 g       *ABS*	00000000 CL_SIZE
+000000f8 g       .text.init	00000000 SIM_STOP
+000007e0 g       .bss	00000000 _end
+000007c0 g       .tohost	00000000 fromhost
+00000780 g       .tohost	00000000 tohost
+000000f4 g       .text.init	00000000 SIM_EXIT
+
+
+
+Дизассемблирование раздела .text.init:
+
+00000000 <SIM_EXIT-0xf4>:
+	...
+
+000000f4 <SIM_EXIT>:
+  f4:	00000013          	nop
+
+000000f8 <SIM_STOP>:
+  f8:	0000006f          	j	f8 <SIM_STOP>
+  fc:	ffff                	0xffff
+  fe:	ffff                	0xffff
+	...
+
+000001c0 <trap_vector>:
+ 1c0:	34202773          	csrr	a4,mcause
+ 1c4:	00800793          	li	a5,8
+ 1c8:	02f70a63          	beq	a4,a5,1fc <_report>
+ 1cc:	00900793          	li	a5,9
+ 1d0:	02f70663          	beq	a4,a5,1fc <_report>
+ 1d4:	00b00793          	li	a5,11
+ 1d8:	02f70263          	beq	a4,a5,1fc <_report>
+ 1dc:	00000717          	auipc	a4,0x0
+ 1e0:	e2470713          	addi	a4,a4,-476 # 0 <CL_SIZE-0x20>
+ 1e4:	00070463          	beqz	a4,1ec <trap_vector+0x2c>
+ 1e8:	00070067          	jr	a4
+ 1ec:	34202773          	csrr	a4,mcause
+ 1f0:	00075463          	bgez	a4,1f8 <handle_exception>
+ 1f4:	0040006f          	j	1f8 <handle_exception>
+
+000001f8 <handle_exception>:
+ 1f8:	00100513          	li	a0,1
+
+000001fc <_report>:
+ 1fc:	3c40006f          	j	5c0 <sc_exit>
+
+00000200 <_start>:
+ 200:	f1402573          	csrr	a0,mhartid
+ 204:	00051063          	bnez	a0,204 <_start+0x4>
+ 208:	00000e13          	li	t3,0
+ 20c:	00000297          	auipc	t0,0x0
+ 210:	fb428293          	addi	t0,t0,-76 # 1c0 <trap_vector>
+ 214:	30529073          	csrw	mtvec,t0
+ 218:	00100513          	li	a0,1
+ 21c:	01f51513          	slli	a0,a0,0x1f
+ 220:	00054a63          	bltz	a0,234 <_start+0x34>
+ 224:	0ff0000f          	fence
+ 228:	000e0593          	mv	a1,t3
+ 22c:	00000513          	li	a0,0
+ 230:	00000073          	ecall
+ 234:	00000297          	auipc	t0,0x0
+ 238:	dcc28293          	addi	t0,t0,-564 # 0 <CL_SIZE-0x20>
+ 23c:	00028e63          	beqz	t0,258 <_start+0x58>
+ 240:	10529073          	csrw	stvec,t0
+ 244:	0000b2b7          	lui	t0,0xb
+ 248:	10928293          	addi	t0,t0,265 # b109 <__global_pointer$+0xa141>
+ 24c:	30229073          	csrw	medeleg,t0
+ 250:	30202373          	csrr	t1,medeleg
+ 254:	fa6292e3          	bne	t0,t1,1f8 <handle_exception>
+ 258:	30005073          	csrwi	mstatus,0
+ 25c:	00002537          	lui	a0,0x2
+ 260:	80050513          	addi	a0,a0,-2048 # 1800 <__global_pointer$+0x838>
+ 264:	30052073          	csrs	mstatus,a0
+ 268:	00000297          	auipc	t0,0x0
+ 26c:	03828293          	addi	t0,t0,56 # 2a0 <_run_test>
+ 270:	34129073          	csrw	mepc,t0
+ 274:	f1402573          	csrr	a0,mhartid
+ 278:	30200073          	mret
+	...
+
+Дизассемблирование раздела .text:
+
+000002a0 <_run_test>:
+ 2a0:	00000f97          	auipc	t6,0x0
+ 2a4:	370f8f93          	addi	t6,t6,880 # 610 <begin_regstate>
+ 2a8:	003fa023          	sw	gp,0(t6)
+ 2ac:	004fa223          	sw	tp,4(t6)
+ 2b0:	005fa423          	sw	t0,8(t6)
+ 2b4:	f00001b7          	lui	gp,0xf0000
+ 2b8:	00000217          	auipc	tp,0x0
+ 2bc:	3b820213          	addi	tp,tp,952 # 670 <end_signature>
+ 2c0:	00020283          	lb	t0,0(tp) # 0 <CL_SIZE-0x20>
+ 2c4:	00518023          	sb	t0,0(gp) # f0000000 <__global_pointer$+0xeffff038>
+ 2c8:	00028663          	beqz	t0,2d4 <_run_test+0x34>
+ 2cc:	00120213          	addi	tp,tp,1 # 1 <CL_SIZE-0x1f>
+ 2d0:	ff1ff06f          	j	2c0 <_run_test+0x20>
+ 2d4:	00000f97          	auipc	t6,0x0
+ 2d8:	33cf8f93          	addi	t6,t6,828 # 610 <begin_regstate>
+ 2dc:	000fa183          	lw	gp,0(t6)
+ 2e0:	004fa203          	lw	tp,4(t6)
+ 2e4:	008fa283          	lw	t0,8(t6)
+ 2e8:	00000f97          	auipc	t6,0x0
+ 2ec:	328f8f93          	addi	t6,t6,808 # 610 <begin_regstate>
+ 2f0:	003fa023          	sw	gp,0(t6)
+ 2f4:	004fa223          	sw	tp,4(t6)
+ 2f8:	005fa423          	sw	t0,8(t6)
+ 2fc:	f00001b7          	lui	gp,0xf0000
+ 300:	00000217          	auipc	tp,0x0
+ 304:	37e20213          	addi	tp,tp,894 # 67e <end_signature+0xe>
+ 308:	00020283          	lb	t0,0(tp) # 0 <CL_SIZE-0x20>
+ 30c:	00518023          	sb	t0,0(gp) # f0000000 <__global_pointer$+0xeffff038>
+ 310:	00028663          	beqz	t0,31c <_run_test+0x7c>
+ 314:	00120213          	addi	tp,tp,1 # 1 <CL_SIZE-0x1f>
+ 318:	ff1ff06f          	j	308 <_run_test+0x68>
+ 31c:	00000f97          	auipc	t6,0x0
+ 320:	2f4f8f93          	addi	t6,t6,756 # 610 <begin_regstate>
+ 324:	000fa183          	lw	gp,0(t6)
+ 328:	004fa203          	lw	tp,4(t6)
+ 32c:	008fa283          	lw	t0,8(t6)
+ 330:	00000797          	auipc	a5,0x0
+ 334:	30078793          	addi	a5,a5,768 # 630 <begin_signature>
+ 338:	000000b7          	lui	ra,0x0
+ 33c:	000011b7          	lui	gp,0x1
+ 340:	fffff2b7          	lui	t0,0xfffff
+ 344:	7ffffeb7          	lui	t4,0x7ffff
+ 348:	80000fb7          	lui	t6,0x80000
+ 34c:	0017a023          	sw	ra,0(a5)
+ 350:	0037a223          	sw	gp,4(a5)
+ 354:	0057a423          	sw	t0,8(a5)
+ 358:	01d7a623          	sw	t4,12(a5)
+ 35c:	01f7a823          	sw	t6,16(a5)
+ 360:	00000f97          	auipc	t6,0x0
+ 364:	2b0f8f93          	addi	t6,t6,688 # 610 <begin_regstate>
+ 368:	003fa023          	sw	gp,0(t6)
+ 36c:	004fa223          	sw	tp,4(t6)
+ 370:	005fa423          	sw	t0,8(t6)
+ 374:	f00001b7          	lui	gp,0xf0000
+ 378:	00000217          	auipc	tp,0x0
+ 37c:	32b20213          	addi	tp,tp,811 # 6a3 <end_signature+0x33>
+ 380:	00020283          	lb	t0,0(tp) # 0 <CL_SIZE-0x20>
+ 384:	00518023          	sb	t0,0(gp) # f0000000 <__global_pointer$+0xeffff038>
+ 388:	00028663          	beqz	t0,394 <_run_test+0xf4>
+ 38c:	00120213          	addi	tp,tp,1 # 1 <CL_SIZE-0x1f>
+ 390:	ff1ff06f          	j	380 <_run_test+0xe0>
+ 394:	00000f97          	auipc	t6,0x0
+ 398:	27cf8f93          	addi	t6,t6,636 # 610 <begin_regstate>
+ 39c:	000fa183          	lw	gp,0(t6)
+ 3a0:	004fa203          	lw	tp,4(t6)
+ 3a4:	008fa283          	lw	t0,8(t6)
+ 3a8:	00000f97          	auipc	t6,0x0
+ 3ac:	268f8f93          	addi	t6,t6,616 # 610 <begin_regstate>
+ 3b0:	003fa023          	sw	gp,0(t6)
+ 3b4:	004fa223          	sw	tp,4(t6)
+ 3b8:	005fa423          	sw	t0,8(t6)
+ 3bc:	f00001b7          	lui	gp,0xf0000
+ 3c0:	00000217          	auipc	tp,0x0
+ 3c4:	2ff20213          	addi	tp,tp,767 # 6bf <end_signature+0x4f>
+ 3c8:	00020283          	lb	t0,0(tp) # 0 <CL_SIZE-0x20>
+ 3cc:	00518023          	sb	t0,0(gp) # f0000000 <__global_pointer$+0xeffff038>
+ 3d0:	00028663          	beqz	t0,3dc <_run_test+0x13c>
+ 3d4:	00120213          	addi	tp,tp,1 # 1 <CL_SIZE-0x1f>
+ 3d8:	ff1ff06f          	j	3c8 <_run_test+0x128>
+ 3dc:	00000f97          	auipc	t6,0x0
+ 3e0:	234f8f93          	addi	t6,t6,564 # 610 <begin_regstate>
+ 3e4:	000fa183          	lw	gp,0(t6)
+ 3e8:	004fa203          	lw	tp,4(t6)
+ 3ec:	008fa283          	lw	t0,8(t6)
+ 3f0:	00000797          	auipc	a5,0x0
+ 3f4:	21078793          	addi	a5,a5,528 # 600 <test_B_data>
+ 3f8:	00000817          	auipc	a6,0x0
+ 3fc:	24c80813          	addi	a6,a6,588 # 644 <test_B_res>
+ 400:	0007a103          	lw	sp,0(a5)
+ 404:	0007a203          	lw	tp,0(a5)
+ 408:	0007a303          	lw	t1,0(a5)
+ 40c:	0007ae03          	lw	t3,0(a5)
+ 410:	0007af03          	lw	t5,0(a5)
+ 414:	80000137          	lui	sp,0x80000
+ 418:	7ffff237          	lui	tp,0x7ffff
+ 41c:	00000337          	lui	t1,0x0
+ 420:	00001e37          	lui	t3,0x1
+ 424:	ffffff37          	lui	t5,0xfffff
+ 428:	00282023          	sw	sp,0(a6)
+ 42c:	00482223          	sw	tp,4(a6)
+ 430:	00682423          	sw	t1,8(a6)
+ 434:	01c82623          	sw	t3,12(a6)
+ 438:	01e82823          	sw	t5,16(a6)
+ 43c:	00000f97          	auipc	t6,0x0
+ 440:	1d4f8f93          	addi	t6,t6,468 # 610 <begin_regstate>
+ 444:	003fa023          	sw	gp,0(t6)
+ 448:	004fa223          	sw	tp,4(t6)
+ 44c:	005fa423          	sw	t0,8(t6)
+ 450:	f00001b7          	lui	gp,0xf0000
+ 454:	00000217          	auipc	tp,0x0
+ 458:	29920213          	addi	tp,tp,665 # 6ed <end_signature+0x7d>
+ 45c:	00020283          	lb	t0,0(tp) # 0 <CL_SIZE-0x20>
+ 460:	00518023          	sb	t0,0(gp) # f0000000 <__global_pointer$+0xeffff038>
+ 464:	00028663          	beqz	t0,470 <STACK_SIZE+0x70>
+ 468:	00120213          	addi	tp,tp,1 # 1 <CL_SIZE-0x1f>
+ 46c:	ff1ff06f          	j	45c <STACK_SIZE+0x5c>
+ 470:	00000f97          	auipc	t6,0x0
+ 474:	1a0f8f93          	addi	t6,t6,416 # 610 <begin_regstate>
+ 478:	000fa183          	lw	gp,0(t6)
+ 47c:	004fa203          	lw	tp,4(t6)
+ 480:	008fa283          	lw	t0,8(t6)
+ 484:	00000f97          	auipc	t6,0x0
+ 488:	18cf8f93          	addi	t6,t6,396 # 610 <begin_regstate>
+ 48c:	003fa023          	sw	gp,0(t6)
+ 490:	004fa223          	sw	tp,4(t6)
+ 494:	005fa423          	sw	t0,8(t6)
+ 498:	f00001b7          	lui	gp,0xf0000
+ 49c:	00000217          	auipc	tp,0x0
+ 4a0:	26d20213          	addi	tp,tp,621 # 709 <end_signature+0x99>
+ 4a4:	00020283          	lb	t0,0(tp) # 0 <CL_SIZE-0x20>
+ 4a8:	00518023          	sb	t0,0(gp) # f0000000 <__global_pointer$+0xeffff038>
+ 4ac:	00028663          	beqz	t0,4b8 <STACK_SIZE+0xb8>
+ 4b0:	00120213          	addi	tp,tp,1 # 1 <CL_SIZE-0x1f>
+ 4b4:	ff1ff06f          	j	4a4 <STACK_SIZE+0xa4>
+ 4b8:	00000f97          	auipc	t6,0x0
+ 4bc:	158f8f93          	addi	t6,t6,344 # 610 <begin_regstate>
+ 4c0:	000fa183          	lw	gp,0(t6)
+ 4c4:	004fa203          	lw	tp,4(t6)
+ 4c8:	008fa283          	lw	t0,8(t6)
+ 4cc:	00000897          	auipc	a7,0x0
+ 4d0:	18c88893          	addi	a7,a7,396 # 658 <test_C_res>
+ 4d4:	427270b7          	lui	ra,0x42727
+ 4d8:	e6f08093          	addi	ra,ra,-401 # 42726e6f <__global_pointer$+0x42725ea7>
+ 4dc:	123457b7          	lui	a5,0x12345
+ 4e0:	67878793          	addi	a5,a5,1656 # 12345678 <__global_pointer$+0x123446b0>
+ 4e4:	9abcef37          	lui	t5,0x9abce
+ 4e8:	ef0f0f13          	addi	t5,t5,-272 # 9abcdef0 <__global_pointer$+0x9abccf28>
+ 4ec:	42727137          	lui	sp,0x42727
+ 4f0:	e6f10113          	addi	sp,sp,-401 # 42726e6f <__global_pointer$+0x42725ea7>
+ 4f4:	12345837          	lui	a6,0x12345
+ 4f8:	67880813          	addi	a6,a6,1656 # 12345678 <__global_pointer$+0x123446b0>
+ 4fc:	9abcefb7          	lui	t6,0x9abce
+ 500:	ef0f8f93          	addi	t6,t6,-272 # 9abcdef0 <__global_pointer$+0x9abccf28>
+ 504:	0018a023          	sw	ra,0(a7)
+ 508:	00f8a223          	sw	a5,4(a7)
+ 50c:	01e8a423          	sw	t5,8(a7)
+ 510:	0028a623          	sw	sp,12(a7)
+ 514:	0108a823          	sw	a6,16(a7)
+ 518:	01f8aa23          	sw	t6,20(a7)
+ 51c:	00000f97          	auipc	t6,0x0
+ 520:	0f4f8f93          	addi	t6,t6,244 # 610 <begin_regstate>
+ 524:	003fa023          	sw	gp,0(t6)
+ 528:	004fa223          	sw	tp,4(t6)
+ 52c:	005fa423          	sw	t0,8(t6)
+ 530:	f00001b7          	lui	gp,0xf0000
+ 534:	00000217          	auipc	tp,0x0
+ 538:	21a20213          	addi	tp,tp,538 # 74e <end_signature+0xde>
+ 53c:	00020283          	lb	t0,0(tp) # 0 <CL_SIZE-0x20>
+ 540:	00518023          	sb	t0,0(gp) # f0000000 <__global_pointer$+0xeffff038>
+ 544:	00028663          	beqz	t0,550 <STACK_SIZE+0x150>
+ 548:	00120213          	addi	tp,tp,1 # 1 <CL_SIZE-0x1f>
+ 54c:	ff1ff06f          	j	53c <STACK_SIZE+0x13c>
+ 550:	00000f97          	auipc	t6,0x0
+ 554:	0c0f8f93          	addi	t6,t6,192 # 610 <begin_regstate>
+ 558:	000fa183          	lw	gp,0(t6)
+ 55c:	004fa203          	lw	tp,4(t6)
+ 560:	008fa283          	lw	t0,8(t6)
+ 564:	00000f97          	auipc	t6,0x0
+ 568:	0acf8f93          	addi	t6,t6,172 # 610 <begin_regstate>
+ 56c:	003fa023          	sw	gp,0(t6)
+ 570:	004fa223          	sw	tp,4(t6)
+ 574:	005fa423          	sw	t0,8(t6)
+ 578:	f00001b7          	lui	gp,0xf0000
+ 57c:	00000217          	auipc	tp,0x0
+ 580:	1ee20213          	addi	tp,tp,494 # 76a <end_signature+0xfa>
+ 584:	00020283          	lb	t0,0(tp) # 0 <CL_SIZE-0x20>
+ 588:	00518023          	sb	t0,0(gp) # f0000000 <__global_pointer$+0xeffff038>
+ 58c:	00028663          	beqz	t0,598 <STACK_SIZE+0x198>
+ 590:	00120213          	addi	tp,tp,1 # 1 <CL_SIZE-0x1f>
+ 594:	ff1ff06f          	j	584 <STACK_SIZE+0x184>
+ 598:	00000f97          	auipc	t6,0x0
+ 59c:	078f8f93          	addi	t6,t6,120 # 610 <begin_regstate>
+ 5a0:	000fa183          	lw	gp,0(t6)
+ 5a4:	004fa203          	lw	tp,4(t6)
+ 5a8:	008fa283          	lw	t0,8(t6)
+
+000005ac <ecall>:
+ 5ac:	00000073          	ecall
+	...
+
+000005c0 <sc_exit>:
+ 5c0:	b35ff06f          	j	f4 <SIM_EXIT>
+ 5c4:	00000013          	nop
+ 5c8:	00000013          	nop
+ 5cc:	00000013          	nop
+ 5d0:	00000013          	nop
+ 5d4:	00000013          	nop
+ 5d8:	00000013          	nop
+ 5dc:	00000013          	nop
+	...
+
+Дизассемблирование раздела .data:
+
+00000600 <test_B_data>:
+ 600:	1111                	addi	sp,sp,-28
+ 602:	1111                	addi	sp,sp,-28
+	...
+
+00000610 <begin_regstate>:
+	...
+
+00000630 <begin_signature>:
+ 630:	ffff                	0xffff
+ 632:	ffff                	0xffff
+ 634:	ffff                	0xffff
+ 636:	ffff                	0xffff
+ 638:	ffff                	0xffff
+ 63a:	ffff                	0xffff
+ 63c:	ffff                	0xffff
+ 63e:	ffff                	0xffff
+ 640:	ffff                	0xffff
+ 642:	ffff                	0xffff
+
+00000644 <test_B_res>:
+ 644:	ffff                	0xffff
+ 646:	ffff                	0xffff
+ 648:	ffff                	0xffff
+ 64a:	ffff                	0xffff
+ 64c:	ffff                	0xffff
+ 64e:	ffff                	0xffff
+ 650:	ffff                	0xffff
+ 652:	ffff                	0xffff
+ 654:	ffff                	0xffff
+ 656:	ffff                	0xffff
+
+00000658 <test_C_res>:
+ 658:	ffff                	0xffff
+ 65a:	ffff                	0xffff
+ 65c:	ffff                	0xffff
+ 65e:	ffff                	0xffff
+ 660:	ffff                	0xffff
+ 662:	ffff                	0xffff
+ 664:	ffff                	0xffff
+ 666:	ffff                	0xffff
+ 668:	ffff                	0xffff
+ 66a:	ffff                	0xffff
+ 66c:	ffff                	0xffff
+ 66e:	ffff                	0xffff
+
+00000670 <end_signature>:
+ 670:	65542023          	sw	s5,1600(s0)
+ 674:	42207473          	csrrci	s0,0x422,0
+ 678:	6765                	lui	a4,0x19
+ 67a:	6e69                	lui	t3,0x1a
+ 67c:	000a                	0xa
+ 67e:	65542023          	sw	s5,1600(s0)
+ 682:	70207473          	csrrci	s0,0x702,0
+ 686:	7261                	lui	tp,0xffff8
+ 688:	2074                	fld	fa3,192(s0)
+ 68a:	2041                	jal	70a <end_signature+0x9a>
+ 68c:	202d                	jal	6b6 <end_signature+0x46>
+ 68e:	656e6567          	0x656e6567
+ 692:	6172                	flw	ft2,28(sp)
+ 694:	206c                	fld	fa1,192(s0)
+ 696:	6574                	flw	fa3,76(a0)
+ 698:	6f207473          	csrrci	s0,0x6f2,0
+ 69c:	2066                	fld	ft0,88(sp)
+ 69e:	554c                	lw	a1,44(a0)
+ 6a0:	0a49                	addi	s4,s4,18
+ 6a2:	2300                	fld	fs0,0(a4)
+ 6a4:	5420                	lw	s0,104(s0)
+ 6a6:	7365                	lui	t1,0xffff9
+ 6a8:	2074                	fld	fa3,192(s0)
+ 6aa:	6170                	flw	fa2,68(a0)
+ 6ac:	7472                	flw	fs0,60(sp)
+ 6ae:	4120                	lw	s0,64(a0)
+ 6b0:	2031                	jal	6bc <end_signature+0x4c>
+ 6b2:	2d20                	fld	fs0,88(a0)
+ 6b4:	4320                	lw	s0,64(a4)
+ 6b6:	6c706d6f          	jal	s10,757c <__global_pointer$+0x65b4>
+ 6ba:	7465                	lui	s0,0xffff9
+ 6bc:	0a65                	addi	s4,s4,25
+ 6be:	2300                	fld	fs0,0(a4)
+ 6c0:	5420                	lw	s0,104(s0)
+ 6c2:	7365                	lui	t1,0xffff9
+ 6c4:	2074                	fld	fa3,192(s0)
+ 6c6:	6170                	flw	fa2,68(a0)
+ 6c8:	7472                	flw	fs0,60(sp)
+ 6ca:	4220                	lw	s0,64(a2)
+ 6cc:	2d20                	fld	fs0,88(a0)
+ 6ce:	7420                	flw	fs0,104(s0)
+ 6d0:	7365                	lui	t1,0xffff9
+ 6d2:	2074                	fld	fa3,192(s0)
+ 6d4:	554c                	lw	a1,44(a0)
+ 6d6:	2049                	jal	758 <end_signature+0xe8>
+ 6d8:	7265766f          	jal	a2,57dfe <__global_pointer$+0x56e36>
+ 6dc:	74697277          	0x74697277
+ 6e0:	7365                	lui	t1,0xffff9
+ 6e2:	6c20                	flw	fs0,88(s0)
+ 6e4:	6220776f          	jal	a4,7d06 <__global_pointer$+0x6d3e>
+ 6e8:	7469                	lui	s0,0xffffa
+ 6ea:	23000a73          	0x23000a73
+ 6ee:	5420                	lw	s0,104(s0)
+ 6f0:	7365                	lui	t1,0xffff9
+ 6f2:	2074                	fld	fa3,192(s0)
+ 6f4:	6170                	flw	fa2,68(a0)
+ 6f6:	7472                	flw	fs0,60(sp)
+ 6f8:	4120                	lw	s0,64(a0)
+ 6fa:	2032                	fld	ft0,264(sp)
+ 6fc:	2d20                	fld	fs0,88(a0)
+ 6fe:	4320                	lw	s0,64(a4)
+ 700:	6c706d6f          	jal	s10,75c6 <__global_pointer$+0x65fe>
+ 704:	7465                	lui	s0,0xffff9
+ 706:	0a65                	addi	s4,s4,25
+ 708:	2300                	fld	fs0,0(a4)
+ 70a:	5420                	lw	s0,104(s0)
+ 70c:	7365                	lui	t1,0xffff9
+ 70e:	2074                	fld	fa3,192(s0)
+ 710:	6170                	flw	fa2,68(a0)
+ 712:	7472                	flw	fs0,60(sp)
+ 714:	4320                	lw	s0,64(a4)
+ 716:	2d20                	fld	fs0,88(a0)
+ 718:	7420                	flw	fs0,104(s0)
+ 71a:	7365                	lui	t1,0xffff9
+ 71c:	2074                	fld	fa3,192(s0)
+ 71e:	6f6c                	flw	fa1,92(a4)
+ 720:	6461                	lui	s0,0x18
+ 722:	6e69                	lui	t3,0x1a
+ 724:	6d692067          	0x6d692067
+ 728:	656d                	lui	a0,0x1b
+ 72a:	6964                	flw	fs1,84(a0)
+ 72c:	7461                	lui	s0,0xffff8
+ 72e:	2065                	jal	7d6 <fromhost+0x16>
+ 730:	7375                	lui	t1,0xffffd
+ 732:	6e69                	lui	t3,0x1a
+ 734:	756c2067          	0x756c2067
+ 738:	2069                	jal	7c2 <fromhost+0x2>
+ 73a:	6461202b          	0x6461202b
+ 73e:	6964                	flw	fs1,84(a0)
+ 740:	6f20                	flw	fs0,88(a4)
+ 742:	2072                	fld	ft0,280(sp)
+ 744:	696c                	flw	fa1,84(a0)
+ 746:	6120                	flw	fs0,64(a0)
+ 748:	696c                	flw	fa1,84(a0)
+ 74a:	7361                	lui	t1,0xffff8
+ 74c:	000a                	0xa
+ 74e:	65542023          	sw	s5,1600(s0) # ffff8640 <__global_pointer$+0xffff7678>
+ 752:	70207473          	csrrci	s0,0x702,0
+ 756:	7261                	lui	tp,0xffff8
+ 758:	2074                	fld	fa3,192(s0)
+ 75a:	3341                	jal	4da <STACK_SIZE+0xda>
+ 75c:	2020                	fld	fs0,64(s0)
+ 75e:	202d                	jal	788 <tohost+0x8>
+ 760:	706d6f43          	fmadd.s	ft10,fs10,ft6,fa4,unknown
+ 764:	656c                	flw	fa1,76(a0)
+ 766:	6574                	flw	fa3,76(a0)
+ 768:	000a                	0xa
+ 76a:	65542023          	sw	s5,1600(s0)
+ 76e:	45207473          	csrrci	s0,0x452,0
+ 772:	646e                	flw	fs0,216(sp)
+ 774:	000a                	0xa
+	...
+
+Дизассемблирование раздела .tohost:
+
+00000780 <tohost>:
+	...
+
+000007c0 <fromhost>:
+	...
+
+Дизассемблирование раздела .sdata:
+
+000007c8 <__global_pointer$-0x800>:
+	...
+
+Дизассемблирование раздела .stack:
+
+0000fc00 <.stack>:
+	...
