@@ -1,11 +1,10 @@
 // Verilated -*- C++ -*-
 // DESCRIPTION: Verilator output: Symbol table internal header
 //
-// Internal details; most calling programs do not need this header,
-// unless using verilator public meta comments.
+// Internal details; most calling programs do not need this header
 
-#ifndef _VSCR1_TOP_TB_AHB__SYMS_H_
-#define _VSCR1_TOP_TB_AHB__SYMS_H_  // guard
+#ifndef _Vscr1_top_tb_ahb__Syms_H_
+#define _Vscr1_top_tb_ahb__Syms_H_
 
 #include "verilated_heavy.h"
 
@@ -33,6 +32,6 @@ class Vscr1_top_tb_ahb__Syms : public VerilatedSyms {
     inline const char* name() { return __Vm_namep; }
     inline bool getClearActivity() { bool r=__Vm_activity; __Vm_activity=false; return r; }
     
-} VL_ATTR_ALIGNED(VL_CACHE_LINE_BYTES);
+} VL_ATTR_ALIGNED(64);
 
-#endif  // guard
+#endif // guard

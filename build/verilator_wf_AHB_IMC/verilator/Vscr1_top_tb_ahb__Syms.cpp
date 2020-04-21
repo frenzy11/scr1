@@ -5,15 +5,13 @@
 #include "Vscr1_top_tb_ahb.h"
 #include "Vscr1_top_tb_ahb___024unit.h"
 
-
-
 // FUNCTIONS
 Vscr1_top_tb_ahb__Syms::Vscr1_top_tb_ahb__Syms(Vscr1_top_tb_ahb* topp, const char* namep)
-    // Setup locals
-    : __Vm_namep(namep)
-    , __Vm_activity(false)
-    , __Vm_didInit(false)
-    // Setup submodule names
+	// Setup locals
+	: __Vm_namep(namep)
+	, __Vm_activity(false)
+	, __Vm_didInit(false)
+	// Setup submodule names
 {
     // Pointer to top level
     TOPp = topp;
