@@ -37,26 +37,27 @@
  242:	00f58023          	sb	a5,0(a1)
  246:	47a9                	li	a5,10
  248:	00f58023          	sb	a5,0(a1)
- 24c:	02f70463          	beq	a4,a5,274 <_report>
- 250:	47a5                	li	a5,9
- 252:	02f70163          	beq	a4,a5,274 <_report>
- 256:	47ad                	li	a5,11
- 258:	00f70e63          	beq	a4,a5,274 <_report>
- 25c:	00000717          	auipc	a4,0x0
- 260:	4a470713          	addi	a4,a4,1188 # 700 <mtvec_handler>
- 264:	c311                	beqz	a4,268 <trap_vector+0x68>
- 266:	8702                	jr	a4
- 268:	34202773          	csrr	a4,mcause
- 26c:	00075363          	bgez	a4,272 <handle_exception>
- 270:	a009                	j	272 <handle_exception>
+ 24c:	47a1                	li	a5,8
+ 24e:	02f70463          	beq	a4,a5,276 <_report>
+ 252:	47a5                	li	a5,9
+ 254:	02f70163          	beq	a4,a5,276 <_report>
+ 258:	47ad                	li	a5,11
+ 25a:	00f70e63          	beq	a4,a5,276 <_report>
+ 25e:	00000717          	auipc	a4,0x0
+ 262:	4a270713          	addi	a4,a4,1186 # 700 <mtvec_handler>
+ 266:	c311                	beqz	a4,26a <trap_vector+0x6a>
+ 268:	8702                	jr	a4
+ 26a:	34202773          	csrr	a4,mcause
+ 26e:	00075363          	bgez	a4,274 <handle_exception>
+ 272:	a009                	j	274 <handle_exception>
 
-00000272 <handle_exception>:
- 272:	4505                	li	a0,1
+00000274 <handle_exception>:
+ 274:	4505                	li	a0,1
 
-00000274 <_report>:
- 274:	68c0006f          	j	900 <sc_exit>
- 278:	00000013          	nop
- 27c:	00000013          	nop
+00000276 <_report>:
+ 276:	68a0006f          	j	900 <sc_exit>
+ 27a:	00000013          	nop
+ 27e:	0001                	nop
 	...
 
 00000400 <_start>:
@@ -81,7 +82,7 @@
  43c:	10928293          	addi	t0,t0,265 # b109 <__global_pointer$+0x9f41>
  440:	30229073          	csrw	medeleg,t0
  444:	30202373          	csrr	t1,medeleg
- 448:	e26295e3          	bne	t0,t1,272 <handle_exception>
+ 448:	e26296e3          	bne	t0,t1,274 <handle_exception>
  44c:	30005073          	csrwi	mstatus,0
  450:	00002537          	lui	a0,0x2
  454:	80050513          	addi	a0,a0,-2048 # 1800 <__global_pointer$+0x638>

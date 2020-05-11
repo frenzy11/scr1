@@ -9,10 +9,11 @@
 //-----------------------------------------------------------------------
 // Begin Macro
 //-----------------------------------------------------------------------
+
 #define SC_SIM_OUTPORT (0xf0000000)
-#define RVTEST_PUTCHAR(c) \
-	li a5, (c); \
-	sb a5, 0(a1);
+#define PRINT_CHAR(char) \
+	li a5, (char);\
+	sb a5, 0(a1)
 
 #define RVTEST_RV64U                                                    \
   .macro init;                                                          \
@@ -115,17 +116,18 @@ trap_vector:                                                            \
         /* test whether the test came from pass/fail */                 \
         csrr a4, mcause;                                                \
         li a5, CAUSE_ILLEGAL_INSTRUCTION;                               \
-	bne a4, a5, 2f;							\
-        li a1, SC_SIM_OUTPORT; \
-	RVTEST_PUTCHAR('i'); \
-	RVTEST_PUTCHAR('l'); \
-	RVTEST_PUTCHAR('l'); \
-	RVTEST_PUTCHAR('e'); \
-	RVTEST_PUTCHAR('g'); \
-	RVTEST_PUTCHAR('a'); \
-	RVTEST_PUTCHAR('l'); \
-	RVTEST_PUTCHAR('\n'); 						\
-2:	beq a4, a5, _report;                                            \
+	bne a4,a5,2f;\
+	li a1, SC_SIM_OUTPORT; \
+	PRINT_CHAR('i');\
+	PRINT_CHAR('l');\
+	PRINT_CHAR('l');\
+	PRINT_CHAR('e');\
+	PRINT_CHAR('g');\
+	PRINT_CHAR('a');\
+	PRINT_CHAR('l'); \
+	PRINT_CHAR('\n');\
+2:	li a5, CAUSE_USER_ECALL;                                  \
+	beq a4, a5, _report;                                            \
         li a5, CAUSE_SUPERVISOR_ECALL;                                  \
         beq a4, a5, _report;                                            \
         li a5, CAUSE_MACHINE_ECALL;                                     \
@@ -147,7 +149,7 @@ _report:                                                                \
         j sc_exit;                                                      \
         .align  6;                                                      \
         .globl _start;                                                  \
-	.org 0x274;							\
+	.org 0x276;							\
 _start:                                                                 \
         RISCV_MULTICORE_DISABLE;                                        \
         /*INIT_SPTBR;*/                                                 \
