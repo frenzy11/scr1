@@ -76,8 +76,8 @@ parameter int unsigned          SCR1_CSR_MTVEC_BASE_VAL_BITS    = `SCR1_XLEN-SCR
   `define SCR1_RVM_EXT                // enables standard extension for integer mul/div
   `define SCR1_RVC_EXT                // enables standard extension for compressed instructions
 
-  //`define SCR1_IFU_QUEUE_BYPASS       // enables bypass between IFU and IDU stages
-  //`define SCR1_EXU_STAGE_BYPASS       // enables bypass between IDU and EXU stages
+  `define SCR1_IFU_QUEUE_BYPASS       // enables bypass between IFU and IDU stages
+  `define SCR1_EXU_STAGE_BYPASS       // enables bypass between IDU and EXU stages
 
   `define SCR1_FAST_MUL               // enables one-cycle multiplication
 
