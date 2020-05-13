@@ -27,7 +27,7 @@ parameter int unsigned          SCR1_CSR_MTVEC_BASE_VAL_BITS    = `SCR1_XLEN-SCR
 //-------------------------------------------------------------------------------
 //`define SCR1_CFG_RV32EC_MIN
 //`define SCR1_CFG_RV32IC_BASE
-`define SCR1_CFG_RV32IMC_MAX
+//`define SCR1_CFG_RV32IMC_MAX
 
 //-------------------------------------------------------------------------------
 // Setting recommended configurations (READ-ONLY, do not modify)
